@@ -5,6 +5,14 @@ const cookieParser = require("cookie-parser");
 
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const tripRoutes = require("./routes/tripRoutes");
+const tripMemberRoutes = require("./routes/tripMemberRoutes");
+const itineraryRoutes = require("./routes/itineraryRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const galleryRoutes = require("./routes/galleryRoutes");
 dotenv.config();
 
 const app = express();
@@ -30,6 +38,15 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/users", userRoutes);
+app.use("/api/trips", tripRoutes);
+app.use("/api/trip-members", tripMemberRoutes);
+app.use("/api/itinerary", itineraryRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/notifications", notificationRoutes);
+
+app.use("/api/gallery",galleryRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

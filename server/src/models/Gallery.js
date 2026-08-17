@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const messageSchema = new mongoose.Schema(
+const gallerySchema = new mongoose.Schema(
     {
         trip: {
             type: mongoose.Schema.Types.ObjectId,
@@ -8,21 +8,26 @@ const messageSchema = new mongoose.Schema(
             required: true
         },
 
-        sender: {
+        uploadedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
         },
 
-        message: {
+        mediaUrl: {
             type: String,
             required: true
         },
 
-        messageType: {
+        mediaType: {
             type: String,
-            enum: ["text", "image", "file"],
-            default: "text"
+            enum: ["image", "video"],
+            required: true
+        },
+
+        caption: {
+            type: String,
+            trim: true
         }
     },
     {
@@ -30,4 +35,4 @@ const messageSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("Message", messageSchema);
+module.exports = mongoose.model("Gallery", gallerySchema);
