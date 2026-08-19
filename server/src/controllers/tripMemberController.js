@@ -15,6 +15,8 @@ const addMember = async (req, res) => {
                 message: "Trip not found"
             });
         }
+        // console.log("req.user:", req.user);
+        // console.log("trip.createdBy:", trip.createdBy);
 
         if (trip.createdBy.toString() !== req.user.toString()) {
             return res.status(403).json({
@@ -52,13 +54,21 @@ const addMember = async (req, res) => {
             member
         });
 
-    } catch (error) {
-        console.error("Add Member Error:", error);
+    // } catch (error) {
+    //     console.error("Add Member Error:", error);
 
-        res.status(500).json({
-            message: "Failed to add member"
-        });
-    }
+    //     res.status(500).json({
+    //         message: "Failed to add member"
+    //     });
+    // }
+    } catch (error) {
+    console.error("Add Member Error:", error);
+
+    res.status(500).json({
+        message: "Failed to add member",
+        error: error.message
+    });
+}
 };
 
 

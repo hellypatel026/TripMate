@@ -6,17 +6,17 @@ const {
     removeMember
 } = require("../controllers/tripMemberController");
 
-//const protect = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.post("/:tripId",  addMember);
+router.post("/:tripId", protect, addMember);
 
-router.get("/:tripId",  getMembers);
+router.get("/:tripId", protect, getMembers);
 
 router.delete(
     "/:tripId/:userId",
-    
+    protect,
     removeMember
 );
 

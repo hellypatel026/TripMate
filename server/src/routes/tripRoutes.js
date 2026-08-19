@@ -9,17 +9,32 @@ const {
 } = require("../controllers/tripController");
 
 const protect = require("../middleware/authMiddleware");
-
+const {
+    isTripMember,
+    isTripOwner
+} = require("../middleware/tripMiddleware");
 const router = express.Router();
 router.use(protect);
 router.post("/",  createTrip);
 
 router.get("/",  getMyTrips);
 
-router.get("/:tripId",  getTrip);
+router.get(
+    "/:tripId",
+    isTripMember,
+    getTrip
+);
 
-router.put("/:tripId",  updateTrip);
+router.put(
+    "/:tripId",
+    isTripOwner,
+    updateTrip
+);
 
-router.delete("/:tripId",  deleteTrip);
+router.delete(
+    "/:tripId",
+    isTripOwner,
+    deleteTrip
+);
 
 module.exports = router;

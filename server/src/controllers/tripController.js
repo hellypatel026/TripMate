@@ -128,11 +128,11 @@ const updateTrip = async (req, res) => {
         }
 
         // Check if logged-in user is the trip owner
-        if (trip.createdBy.toString() !== req.user.toString()) {
-            return res.status(403).json({
-                message: "Only trip owner can update trip"
-            });
-        }
+        //if (trip.createdBy.toString() !== req.user.toString()) {
+            //return res.status(403).json({
+               // message: "Only trip owner can update trip"
+           // });
+       // }
 
         // Only allow these fields to be updated
         const {
@@ -192,11 +192,11 @@ const deleteTrip = async (req, res) => {
             });
         }
 
-        if (trip.createdBy.toString() !== req.user.toString()) {
-            return res.status(403).json({
-                message: "Only trip owner can delete trip"
-            });
-        }
+        //if (trip.createdBy.toString() !== req.user.toString()) {
+            //return res.status(403).json({
+               // message: "Only trip owner can delete trip"
+            //});
+        //}
 
         await Trip.findByIdAndDelete(req.params.tripId);
 
