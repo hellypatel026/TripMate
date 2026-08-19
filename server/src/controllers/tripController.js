@@ -12,7 +12,7 @@ const createTrip = async (req, res) => {
             endDate,
             budget,
             coverImage,
-            createdBy
+            //createdBy
         } = req.body;
 
         if (!name || !destination || !startDate || !endDate) {
@@ -127,15 +127,35 @@ const updateTrip = async (req, res) => {
             });
         }
 
+        // Check if logged-in user is the trip owner
         if (trip.createdBy.toString() !== req.user.toString()) {
             return res.status(403).json({
                 message: "Only trip owner can update trip"
             });
         }
 
+        // Only allow these fields to be updated
+        const {
+            name,
+            destination,
+            description,
+            startDate,
+            endDate,
+            budget,
+            coverImage
+        } = req.body;
+
         const updatedTrip = await Trip.findByIdAndUpdate(
             req.params.tripId,
-            req.body,
+            {
+                name,
+                destination,
+                description,
+                startDate,
+                endDate,
+                budget,
+                coverImage
+            },
             {
                 new: true,
                 runValidators: true
@@ -151,7 +171,8 @@ const updateTrip = async (req, res) => {
         console.error("Update Trip Error:", error);
 
         res.status(500).json({
-            message: "Failed to update trip"
+            message: "Failed to update trip",
+            error: error.message
         });
     }
 };

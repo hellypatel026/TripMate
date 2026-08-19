@@ -8,10 +8,10 @@ const {
     deleteTrip
 } = require("../controllers/tripController");
 
-//const protect = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
-
+router.use(protect);
 router.post("/",  createTrip);
 
 router.get("/",  getMyTrips);
