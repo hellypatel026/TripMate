@@ -7,31 +7,31 @@ const {
     deleteBooking
 } = require("../controllers/bookingController");
 
-//const protect = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post(
     "/:tripId",
-  
+  protect,
     createBooking
 );
 
 router.get(
     "/:tripId",
-
+protect,
     getBookings
 );
 
 router.put(
     "/:id",
-  
+  protect,
     updateBooking
 );
 
 router.delete(
     "/:id",
-
+protect,
     deleteBooking
 );
 

@@ -24,6 +24,7 @@ const expenseSchema = new mongoose.Schema(
             enum: [
                 "food",
                 "hotel",
+                "Accommodation",
                 "transport",
                 "shopping",
                 "activity",

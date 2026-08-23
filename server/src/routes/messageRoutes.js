@@ -5,19 +5,19 @@ const {
     createMessage
 } = require("../controllers/messageController");
 
-//const protect = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.get(
     "/:tripId",
-  
+  protect,
     getMessages
 );
 
 router.post(
     "/:tripId",
-   
+   protect,
     createMessage
 );
 
