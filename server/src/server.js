@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const http = require("http");
@@ -30,7 +31,19 @@ const io = new Server(server, {
 });
 setupChatSocket(io);
 connectDB();
+// const startServer = async () => {
+//     try {
+//         await connectDB();
 
+//         server.listen(PORT, () => {
+//             console.log(`Server running on port ${PORT}`);
+//         });
+
+//     } catch (error) {
+//         console.error("Failed to start server:", error);
+//         process.exit(1);
+//     }
+// };
 app.use(
     cors({
         origin: process.env.CLIENT_URL,

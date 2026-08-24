@@ -27,7 +27,8 @@ const gallerySchema = new mongoose.Schema(
 
         caption: {
             type: String,
-            trim: true
+            trim: true,
+            default: ""
         }
     },
     {
