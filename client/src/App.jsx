@@ -7,39 +7,50 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
+import SocketLoginTest from "./components/SocketLoginTest";
 import SocketTest from "./pages/chat/SocketTest";
-
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-       <BrowserRouter>
-            <Routes>
+    
+    //    <BrowserRouter>
+    //         <Routes>
 
-                <Route
-                    path="/"
-                    element={<h1>TripMate</h1>}
-                />
-                <Route
-                    path="/login"
-                    element={<Login />}
-                />
+    //             <Route
+    //                 path="/"
+    //                 element={<h1>TripMate</h1>}
+    //             />
+    //             <Route
+    //                 path="/login"
+    //                 element={<Login />}
+    //             />
 
-                <Route
-                    path="/register"
-                    element={<Register />}
-                />
+    //             <Route
+    //                 path="/register"
+    //                 element={<Register />}
+    //             />
 
-                <Route
-                    path="/dashboard"
-                    element={<Dashboard />}
-                />
-                <Route
-                    path="/socket-test"
-                    element={<SocketTest />}
-                />
-            </Routes>
-        </BrowserRouter>
+    //             <Route
+    //                 path="/dashboard"
+    //                 element={<Dashboard />}
+    //             />
+    //             <Route
+    //                 path="/socket-test"
+    //                 element={<SocketTest />}
+    //             />
+    //         </Routes>
+    //     </BrowserRouter>
+    <div>
+
+            <SocketLoginTest />
+
+            <hr />
+
+            <SocketTest />
+
+        </div>
+        
   );
 }
 

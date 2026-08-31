@@ -29,7 +29,7 @@ const io = new Server(server, {
     }
 });
 setupChatSocket(io);
-connectDB();
+
 
 app.use(
     cors({
