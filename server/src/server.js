@@ -12,6 +12,7 @@ const tripMemberRoutes = require("./routes/tripMemberRoutes");
 const itineraryRoutes = require("./routes/itineraryRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
+const settlementRoutes = require("./routes/settlementRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const galleryRoutes = require("./routes/galleryRoutes");
@@ -56,6 +57,7 @@ app.use("/api/trip-members", tripMemberRoutes);
 app.use("/api/itinerary", itineraryRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/settlements",settlementRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
 

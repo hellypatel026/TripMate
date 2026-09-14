@@ -4,7 +4,10 @@ const {
     createExpense,
     getExpenses,
     updateExpense,
-    deleteExpense
+    deleteExpense,
+    getExpenseBalances,
+    getExpenseSettlements,
+    getExpenseSummary
 } = require("../controllers/expenseController");
 
 const protect = require("../middleware/authMiddleware");
@@ -22,7 +25,21 @@ router.get(
   protect,
     getExpenses
 );
-
+router.get(
+    "/:tripId/balances",
+    protect,
+    getExpenseBalances
+);
+router.get(
+    "/:tripId/settlements",
+    protect,
+    getExpenseSettlements
+);
+router.get(
+    "/:tripId/summary",
+    protect,
+    getExpenseSummary
+);
 router.put(
     "/:id",
  protect,
