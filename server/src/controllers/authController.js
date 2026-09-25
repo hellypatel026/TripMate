@@ -24,7 +24,7 @@ const generateToken = (userId) => {
 // REGISTER
 // ==========================================
 
-const register = async (req, res) => {
+const register = async ( req, res ) => {
     try {
         const {
             name,
