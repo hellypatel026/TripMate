@@ -9,46 +9,59 @@ const {
     getExpenseSettlements,
     getExpenseSummary
 } = require("../controllers/expenseController");
-
+const {
+    isTripMember,
+    isExpenseMember
+} = require("../middleware/tripMiddleware");
 const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post(
     "/:tripId",
-  protect,
+    protect,
+    isTripMember,
     createExpense
 );
 
 router.get(
     "/:tripId",
-  protect,
+    protect,
+    isTripMember,
     getExpenses
 );
+
 router.get(
     "/:tripId/balances",
     protect,
+    isTripMember,
     getExpenseBalances
 );
+
 router.get(
     "/:tripId/settlements",
     protect,
+    isTripMember,
     getExpenseSettlements
 );
+
 router.get(
     "/:tripId/summary",
     protect,
+    isTripMember,
     getExpenseSummary
 );
 router.put(
     "/:id",
- protect,
+    protect,
+    isExpenseMember,
     updateExpense
 );
 
 router.delete(
     "/:id",
-   protect,
+    protect,
+    isExpenseMember,
     deleteExpense
 );
 

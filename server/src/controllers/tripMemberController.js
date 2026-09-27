@@ -7,7 +7,11 @@ const User = require("../models/User");
 const addMember = async (req, res) => {
     try {
         const { email, role } = req.body;
-
+        if (role && !["member", "co-organizer"].includes(role)) {
+    return res.status(400).json({
+        message: "Invalid member role"
+    });
+}
         const trip = await Trip.findById(req.params.tripId);
 
         if (!trip) {
@@ -66,7 +70,7 @@ const addMember = async (req, res) => {
 
     res.status(500).json({
         message: "Failed to add member",
-        error: error.message
+        
     });
 }
 };

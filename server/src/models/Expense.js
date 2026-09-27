@@ -13,23 +13,18 @@ const expenseSchema = new mongoose.Schema(
             required: true
         },
 
-      amount: {
-    type: Number,
-    min: 0
-},
+        amount: {
+            type: Number,
+            required: true,
+            min: 0.01
+        },
 
-percentage: {
-    type: Number,
-    min: 0,
-    max: 100
-},
 
         category: {
             type: String,
             enum: [
                 "food",
                 "hotel",
-                "Accommodation",
                 "transport",
                 "shopping",
                 "activity",
@@ -54,7 +49,8 @@ percentage: {
             {
                 user: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: "User"
+                    ref: "User",
+                    required: true
                 },
 
                 amount: Number,

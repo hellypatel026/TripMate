@@ -51,9 +51,31 @@ const getBookings = async (req, res) => {
 // UPDATE BOOKING
 const updateBooking = async (req, res) => {
     try {
+        const {
+            type,
+            name,
+            bookingReference,
+            price,
+            status,
+            startDate,
+            endDate,
+            location,
+            documentUrl
+        } = req.body;
+
         const booking = await Booking.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+                type,
+                name,
+                bookingReference,
+                price,
+                status,
+                startDate,
+                endDate,
+                location,
+                documentUrl
+            },
             {
                 new: true,
                 runValidators: true
@@ -72,12 +94,13 @@ const updateBooking = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("Update Booking Error:", error);
+
         res.status(500).json({
             message: "Failed to update booking"
         });
     }
 };
-
 
 // DELETE BOOKING
 const deleteBooking = async (req, res) => {

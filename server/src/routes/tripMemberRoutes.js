@@ -5,14 +5,16 @@ const {
     getMembers,
     removeMember
 } = require("../controllers/tripMemberController");
-
+const {
+    isTripMember
+} = require("../middleware/tripMiddleware");
 const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post("/:tripId", protect, addMember);
 
-router.get("/:tripId", protect, getMembers);
+router.get("/:tripId", protect, isTripMember, getMembers);
 
 router.delete(
     "/:tripId/:userId",

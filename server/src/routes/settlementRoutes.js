@@ -5,7 +5,10 @@ const {
     getSettlements,
     markSettlementPaid
 } = require("../controllers/settlementController");
-
+const {
+    isTripMember,
+    isSettlementMember
+} = require("../middleware/tripMiddleware");
 const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -15,14 +18,15 @@ const router = express.Router();
 router.post(
     "/:tripId",
     protect,
+    isTripMember,
     createSettlement
 );
-
 
 // Get trip settlements
 router.get(
     "/:tripId",
     protect,
+    isTripMember,
     getSettlements
 );
 
@@ -31,6 +35,7 @@ router.get(
 router.put(
     "/:id/paid",
     protect,
+    isSettlementMember,
     markSettlementPaid
 );
 

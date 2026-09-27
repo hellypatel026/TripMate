@@ -302,7 +302,7 @@ const createExpense = async (req, res) => {
 
             message: "Failed to create expense",
 
-            error: error.message
+            
 
         });
 
@@ -343,9 +343,33 @@ const getExpenses = async (req, res) => {
 
 const updateExpense = async (req, res) => {
     try {
+        const {
+            title,
+            amount,
+            category,
+            description
+        } = req.body;
+
+        if (!title || amount === undefined) {
+            return res.status(400).json({
+                message: "Title and amount are required"
+            });
+        }
+
+        if (Number(amount) <= 0) {
+            return res.status(400).json({
+                message: "Amount must be greater than 0"
+            });
+        }
+
         const expense = await Expense.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            {
+                title,
+                amount: Number(amount),
+                category,
+                description
+            },
             {
                 new: true,
                 runValidators: true
@@ -364,12 +388,13 @@ const updateExpense = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("Update Expense Error:", error);
+
         res.status(500).json({
             message: "Failed to update expense"
         });
     }
 };
-
 
 // ==========================================
 // DELETE EXPENSE

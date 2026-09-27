@@ -6,7 +6,7 @@ const setupChatSocket = (io) => {
     io.on("connection", (socket) => {
 
         console.log("User connected:", socket.id);
-       // console.log("Logged in user:", req.user._id);
+        // console.log("Logged in user:", req.user._id);
 
         // ==========================================
         // JOIN TRIP
@@ -16,8 +16,16 @@ const setupChatSocket = (io) => {
 
             try {
 
-                const { userId, tripId } = data;
+                const { tripId } = data;
 
+                const userId = socket.handshake.auth.userId;
+                if (socket.tripId && socket.tripId !== tripId) {
+    socket.emit("socket_error", {
+        message: "You are already connected to another trip"
+    });
+
+    return;
+}
                 if (!userId || !tripId) {
 
                     socket.emit("socket_error", {
@@ -92,77 +100,77 @@ const setupChatSocket = (io) => {
         // SEND MESSAGE
         // ==========================================
 
-socket.on("send_message", async (data) => {
+        socket.on("send_message", async (data) => {
 
-    try {
+            try {
 
-        const { tripId, message } = data;
+                const { tripId, message } = data;
 
-        if (!tripId || !message || !message.trim()) {
-            socket.emit("socket_error", {
-                message: "tripId and message are required"
-            });
-            return;
-        }
+                if (!tripId || !message || !message.trim()) {
+                    socket.emit("socket_error", {
+                        message: "tripId and message are required"
+                    });
+                    return;
+                }
 
-        // Make sure this socket actually joined this trip
-        if (
-            socket.tripId !== tripId ||
-            !socket.userId
-        ) {
-            socket.emit("socket_error", {
-                message: "You are not connected to this trip"
-            });
-            return;
-        }
+                // Make sure this socket actually joined this trip
+                if (
+                    socket.tripId !== tripId ||
+                    !socket.userId
+                ) {
+                    socket.emit("socket_error", {
+                        message: "You are not connected to this trip"
+                    });
+                    return;
+                }
 
-        // Verify membership again
-        const member = await TripMember.findOne({
-            trip: tripId,
-            user: socket.userId
+                // Verify membership again
+                const member = await TripMember.findOne({
+                    trip: tripId,
+                    user: socket.userId
+                });
+
+                if (!member) {
+                    socket.emit("socket_error", {
+                        message: "You are not a member of this trip"
+                    });
+                    return;
+                }
+
+                // Save message
+                const newMessage = await Message.create({
+                    trip: tripId,
+                    sender: socket.userId,
+                    text: message.trim()
+                });
+
+                const populatedMessage = await Message
+                    .findById(newMessage._id)
+                    .populate("sender", "name profilePicture");
+
+                const roomName = `trip_${tripId}`;
+
+                io.to(roomName).emit(
+                    "receive_message",
+                    populatedMessage
+                );
+
+                console.log(
+                    `Message sent by ${socket.userId} in ${roomName}`
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Send message socket error:",
+                    error
+                );
+
+                socket.emit("socket_error", {
+                    message: "Failed to send message"
+                });
+            }
         });
-
-        if (!member) {
-            socket.emit("socket_error", {
-                message: "You are not a member of this trip"
-            });
-            return;
-        }
-
-        // Save message
-        const newMessage = await Message.create({
-            trip: tripId,
-            sender: socket.userId,
-            text: message.trim()
-        });
-
-        const populatedMessage = await Message
-            .findById(newMessage._id)
-            .populate("sender", "name profilePicture");
-
-        const roomName = `trip_${tripId}`;
-
-        io.to(roomName).emit(
-            "receive_message",
-            populatedMessage
-        );
-
-        console.log(
-            `Message sent by ${socket.userId} in ${roomName}`
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Send message socket error:",
-            error
-        );
-
-        socket.emit("socket_error", {
-            message: "Failed to send message"
-        });
-    }
-});
 
 
         // ==========================================

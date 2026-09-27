@@ -6,33 +6,39 @@ const {
     updateBooking,
     deleteBooking
 } = require("../controllers/bookingController");
-
+const {
+    isTripMember,
+    isBookingMember
+} = require("../middleware/tripMiddleware");
 const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post(
     "/:tripId",
-  protect,
+    protect,
+    isTripMember,
     createBooking
 );
 
 router.get(
     "/:tripId",
-protect,
+    protect,
+    isTripMember,
     getBookings
 );
 
 router.put(
     "/:id",
-  protect,
+    protect,
+    isBookingMember,
     updateBooking
 );
 
 router.delete(
     "/:id",
-protect,
+    protect,
+    isBookingMember,
     deleteBooking
 );
-
 module.exports = router;

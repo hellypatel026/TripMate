@@ -6,32 +6,37 @@ const {
     updateItinerary,
     deleteItinerary
 } = require("../controllers/itineraryController");
-
+const {
+    isTripMember,
+    isItineraryMember
+} = require("../middleware/tripMiddleware");
 const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post(
     "/:tripId",
-   protect,
+    protect,
+    isTripMember,
     createItinerary
 );
-
 router.get(
     "/:tripId",
-   protect,
+    protect,
+    isTripMember,
     getItinerary
 );
 
 router.put(
     "/:id",
-   protect,
+    protect,
+    isItineraryMember,
     updateItinerary
 );
-
 router.delete(
     "/:id",
-   protect,
+    protect,
+    isItineraryMember,
     deleteItinerary
 );
 

@@ -1,6 +1,8 @@
 const TripMember = require("../models/TripMember");
-
-
+const Itinerary = require("../models/Itinerary");
+const Booking = require("../models/Booking");
+const Expense = require("../models/Expense");
+const Settlement = require("../models/Settlement");
 // ==========================================
 // CHECK TRIP MEMBER
 // ==========================================
@@ -71,9 +73,163 @@ const isTripOwner = async (req, res, next) => {
         });
     }
 };
+// ==========================================
+// CHECK ITINERARY MEMBER
+// ==========================================
 
+const isItineraryMember = async (req, res, next) => {
+    try {
+        const itinerary = await Itinerary.findById(req.params.id);
 
+        if (!itinerary) {
+            return res.status(404).json({
+                message: "Itinerary not found"
+            });
+        }
+
+        const membership = await TripMember.findOne({
+            trip: itinerary.trip,
+            user: req.user
+        });
+
+        if (!membership) {
+            return res.status(403).json({
+                message: "You are not a member of this trip"
+            });
+        }
+
+        req.itinerary = itinerary;
+        req.tripMembership = membership;
+
+        next();
+
+    } catch (error) {
+        console.error("Itinerary Authorization Error:", error);
+
+        res.status(500).json({
+            message: "Authorization check failed"
+        });
+    }
+};
+
+// ==========================================
+// CHECK BOOKING MEMBER
+// ==========================================
+
+const isBookingMember = async (req, res, next) => {
+    try {
+        const booking = await Booking.findById(req.params.id);
+
+        if (!booking) {
+            return res.status(404).json({
+                message: "Booking not found"
+            });
+        }
+
+        const membership = await TripMember.findOne({
+            trip: booking.trip,
+            user: req.user
+        });
+
+        if (!membership) {
+            return res.status(403).json({
+                message: "You are not a member of this trip"
+            });
+        }
+
+        req.booking = booking;
+        req.tripMembership = membership;
+
+        next();
+
+    } catch (error) {
+        console.error("Booking Authorization Error:", error);
+
+        res.status(500).json({
+            message: "Authorization check failed"
+        });
+    }
+};
+// ==========================================
+// CHECK EXPENSE MEMBER
+// ==========================================
+
+const isExpenseMember = async (req, res, next) => {
+    try {
+        const expense = await Expense.findById(req.params.id);
+
+        if (!expense) {
+            return res.status(404).json({
+                message: "Expense not found"
+            });
+        }
+
+        const membership = await TripMember.findOne({
+            trip: expense.trip,
+            user: req.user
+        });
+
+        if (!membership) {
+            return res.status(403).json({
+                message: "You are not a member of this trip"
+            });
+        }
+
+        req.expense = expense;
+        req.tripMembership = membership;
+
+        next();
+
+    } catch (error) {
+        console.error("Expense Authorization Error:", error);
+
+        res.status(500).json({
+            message: "Authorization check failed"
+        });
+    }
+};// ==========================================
+// CHECK SETTLEMENT MEMBER
+// ==========================================
+
+const isSettlementMember = async (req, res, next) => {
+    try {
+        const settlement = await Settlement.findById(req.params.id);
+
+        if (!settlement) {
+            return res.status(404).json({
+                message: "Settlement not found"
+            });
+        }
+
+        const membership = await TripMember.findOne({
+            trip: settlement.trip,
+            user: req.user
+        });
+
+        if (!membership) {
+            return res.status(403).json({
+                message: "You are not a member of this trip"
+            });
+        }
+
+        req.settlement = settlement;
+        req.tripMembership = membership;
+
+        next();
+
+    } catch (error) {
+        console.error("Settlement Authorization Error:", error);
+
+        res.status(500).json({
+            message: "Authorization check failed"
+        });
+    }
+};
 module.exports = {
     isTripMember,
-    isTripOwner
+    isTripOwner,
+    isItineraryMember,
+    isBookingMember,
+    isExpenseMember,
+    isSettlementMember
 };

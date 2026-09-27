@@ -1,6 +1,6 @@
-   // Temporary testing IDs
-    const tripId = "6a8b1e2cadf3e3e640799ff4";
-    const userId = "6a8b1ebbadf3e3e640799ff6";
+// Temporary testing IDs
+const tripId = "6a8b1e2cadf3e3e640799ff4";
+const userId = "6a8b1ebbadf3e3e640799ff6";
 //tripmemberId 6a8b1ebbadf3e3e640799ff6  6a8b1c87adf3e3e640799ff3 6a8c0ef0699839db2cd61941
 
 import { useEffect, useRef, useState } from "react";
@@ -81,7 +81,7 @@ function SocketTest() {
             console.log("Connected:", socket.id);
 
             socket.emit("join", {
-                userId: userId,
+                
                 tripId: tripId
             });
 
@@ -120,6 +120,10 @@ function SocketTest() {
         socket.on("receive_message", handleReceiveMessage);
         socket.on("socket_error", handleError);
 
+        socket.auth = {
+            userId: userId
+        };
+
         socket.connect();
 
         return () => {
@@ -157,7 +161,6 @@ function SocketTest() {
 
         socket.emit("send_message", {
 
-            senderId: userId,
             tripId: tripId,
             message: message.trim()
 
