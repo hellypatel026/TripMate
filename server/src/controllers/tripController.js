@@ -15,6 +15,7 @@ const createTrip = async (req, res) => {
             //createdBy
         } = req.body;
 
+        
         if (!name || !destination || !startDate || !endDate) {
             return res.status(400).json({
                 message: "Name, destination, start date and end date are required"

@@ -15,6 +15,7 @@ const router = express.Router();
 // Public
 router.post("/register", register);
 
+
 router.post("/login", login);
 
 
