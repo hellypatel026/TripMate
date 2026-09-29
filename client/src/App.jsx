@@ -1,57 +1,82 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import useAuthStore from "./store/authStore";
+
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
-import SocketLoginTest from "./components/SocketLoginTest";
-import SocketTest from "./pages/chat/SocketTest";
+import TripDetails from "./pages/trip/TripDetails";
+import "./App.css";
+import TripChat from "./pages/chat/TripChat";
+import { useParams } from "react-router-dom";
+import Gallery from "./pages/gallery/Gallery";
+import Notifications from "./pages/notifications/Notifications";
+import Profile from "./pages/profile/Profile";
+function TripChatWrapper() {
+    const { tripId } = useParams();
+
+    return <TripChat tripId={tripId} />;
+}
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    
-    //    <BrowserRouter>
-    //         <Routes>
+    const getMe = useAuthStore(
+        (state) => state.getMe
+    );
 
-    //             <Route
-    //                 path="/"
-    //                 element={<h1>TripMate</h1>}
-    //             />
-    //             <Route
-    //                 path="/login"
-    //                 element={<Login />}
-    //             />
+    useEffect(() => {
+        getMe();
+    }, [getMe]);
 
-    //             <Route
-    //                 path="/register"
-    //                 element={<Register />}
-    //             />
+    return (
+        <BrowserRouter>
 
-    //             <Route
-    //                 path="/dashboard"
-    //                 element={<Dashboard />}
-    //             />
-    //             <Route
-    //                 path="/socket-test"
-    //                 element={<SocketTest />}
-    //             />
-    //         </Routes>
-    //     </BrowserRouter>
-    <div>
+            <Routes>
 
-            <SocketLoginTest />
+                <Route
+                    path="/"
+                    element={<h1>Welcome to TripMate</h1>}
+                />
 
-            <hr />
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
 
-            <SocketTest />
+                <Route
+                    path="/register"
+                    element={<Register />}
+                />
 
-        </div>
-        
-  );
+                <Route
+                    path="/dashboard"
+                    element={<Dashboard />}
+                />
+                <Route
+                    path="/trips/:tripId"
+                    element={<TripDetails />}
+                />
+                <Route
+                    path="/trips/:tripId/chat"
+                    element={<TripChatWrapper />}
+                />
+                <Route
+                    path="/trips/:tripId/gallery"
+                    element={<Gallery />}
+                />
+                <Route
+                    path="/notifications"
+                    element={<Notifications />}
+                />
+                <Route
+                    path="/profile"
+                    element={<Profile />}
+                />
+
+            </Routes>
+
+        </BrowserRouter>
+    );
 }
 
-export default App
+export default App;
