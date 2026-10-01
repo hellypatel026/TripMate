@@ -1,0 +1,1029 @@
+/* =========================================
+   TRIPMATE DASHBOARD
+========================================= */
+
+.dashboard-page {
+    min-height: 100vh;
+    background: #f7f8fb;
+    color: #172033;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.dashboard-navbar {
+    width: 100%;
+    height: 78px;
+
+    padding: 0 5%;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e8eaf0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.dashboard-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 23px;
+    font-weight: 800;
+
+    color: #172033;
+}
+
+
+.dashboard-brand-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #172033;
+    color: #ffffff;
+
+    font-size: 18px;
+}
+
+
+.dashboard-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.dashboard-nav-link {
+    padding: 9px 14px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #737d8f;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.dashboard-nav-link:hover,
+.dashboard-nav-link.active {
+    background: #f0f1ff;
+    color: #5556d8;
+}
+
+
+.dashboard-logout {
+    margin-left: 10px;
+
+    padding: 9px 16px;
+
+    border: 1px solid #e0e3e9;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #4c5669;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.dashboard-logout:hover {
+    background: #fff1f1;
+    border-color: #f0cccc;
+    color: #c54a4a;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.dashboard-main {
+    width: min(1180px, 92%);
+
+    margin: 0 auto;
+
+    padding: 55px 0 90px;
+}
+
+
+/* =========================================
+   WELCOME
+========================================= */
+
+.dashboard-welcome {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 55px;
+}
+
+
+.dashboard-eyebrow {
+    margin: 0 0 8px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
+
+    color: #6869df;
+}
+
+
+.dashboard-welcome h1 {
+    margin: 0;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: clamp(38px, 5vw, 56px);
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+
+    font-weight: 800;
+
+    color: #172033;
+}
+
+
+.dashboard-welcome h1 span {
+    font-size: 0.7em;
+}
+
+
+.dashboard-subtitle {
+    margin-top: 14px;
+
+    font-size: 16px;
+
+    color: #7a8496;
+}
+
+
+.create-trip-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 13px 19px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #172033;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 22px rgba(23, 32, 51, 0.14);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.create-trip-button span {
+    font-size: 19px;
+    line-height: 1;
+}
+
+
+.create-trip-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 27px rgba(23, 32, 51, 0.18);
+}
+
+
+/* =========================================
+   CREATE FORM
+========================================= */
+
+.create-trip-panel {
+    margin-bottom: 55px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e8ee;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 45px rgba(23, 32, 51, 0.06);
+}
+
+
+.create-trip-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+
+.create-trip-heading h2 {
+    margin: 0;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 28px;
+
+    color: #172033;
+}
+
+
+.create-trip-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #f0f1ff;
+
+    font-size: 22px;
+}
+
+
+.trip-form {
+    display: grid;
+
+    grid-template-columns:
+        1.2fr
+        1.2fr
+        1fr
+        1fr
+        auto;
+
+    gap: 14px;
+
+    align-items: end;
+}
+
+
+.trip-form-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #4e586b;
+}
+
+
+.trip-form-field input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 13px;
+
+    border: 1px solid #dfe3ea;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font-size: 13px;
+}
+
+
+.trip-form-field input:focus {
+    border-color: #7273df;
+
+    box-shadow:
+        0 0 0 3px rgba(91, 92, 226, 0.09);
+}
+
+
+.save-trip-button {
+    height: 46px;
+
+    padding: 0 18px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #5b5ce2;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.save-trip-button span {
+    margin-left: 5px;
+}
+
+
+/* =========================================
+   TRIPS SECTION
+========================================= */
+
+.trips-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+
+.trips-heading h2 {
+    margin: 0;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 32px;
+
+    color: #172033;
+}
+
+
+.trip-count {
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    background: #ececff;
+
+    color: #5b5ce2;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   TRIP GRID
+========================================= */
+
+.trip-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+.trip-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e7ed;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 12px 35px rgba(23, 32, 51, 0.055);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.trip-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 20px 45px rgba(23, 32, 51, 0.10);
+}
+
+
+/* =========================================
+   CARD VISUAL
+========================================= */
+
+.trip-card-visual {
+    height: 150px;
+
+    padding: 22px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    background:
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(255, 255, 255, 0.35),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #e9ecff,
+            #dff3f2
+        );
+}
+
+
+.trip-destination-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, 0.8);
+
+    font-size: 23px;
+}
+
+
+.trip-role {
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.8);
+
+    color: #4f5870;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+}
+
+
+/* =========================================
+   CARD BODY
+========================================= */
+
+.trip-card-body {
+    padding: 25px;
+}
+
+
+.trip-card-label {
+    margin: 0 0 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    color: #929aaa;
+}
+
+
+.trip-card-body h3 {
+    margin: 0;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    color: #172033;
+}
+
+
+.trip-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    color: #6f798c;
+}
+
+
+.trip-date-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin-top: 25px;
+
+    padding: 16px 0;
+
+    border-top: 1px solid #edf0f4;
+    border-bottom: 1px solid #edf0f4;
+}
+
+
+.trip-date-row div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.trip-date-row span {
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: #9aa2b1;
+}
+
+
+.trip-date-row strong {
+    font-size: 13px;
+
+    color: #394256;
+}
+
+
+.date-arrow {
+    font-size: 18px !important;
+
+    color: #8a93a5 !important;
+}
+
+
+.view-trip-button {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: #f0f1ff;
+
+    color: #5556d8;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.view-trip-button span {
+    margin-left: 5px;
+}
+
+
+.view-trip-button:hover {
+    background: #5b5ce2;
+
+    color: #ffffff;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-trips {
+    padding: 75px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px dashed #dce0e8;
+
+    border-radius: 22px;
+}
+
+
+.empty-trip-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 19px;
+
+    background: #eef0ff;
+
+    font-size: 28px;
+}
+
+
+.empty-trips h3 {
+    margin: 0;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 24px;
+
+    color: #172033;
+}
+
+
+.empty-trips p {
+    max-width: 430px;
+
+    margin: 10px auto 25px;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #7b8495;
+}
+
+
+.empty-create-button {
+    padding: 12px 18px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #172033;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.empty-create-button span {
+    margin-left: 6px;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.dashboard-state {
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    border: 1px solid #e5e8ee;
+}
+
+
+.dashboard-state p {
+    color: #7b8495;
+
+    font-size: 14px;
+}
+
+
+.loading-dot {
+    width: 25px;
+    height: 25px;
+
+    border: 3px solid #e5e8ee;
+    border-top-color: #5b5ce2;
+
+    border-radius: 50%;
+
+    animation: dashboard-spin 0.8s linear infinite;
+}
+
+
+@keyframes dashboard-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .dashboard-navbar {
+        height: auto;
+
+        padding: 18px 5%;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+
+    .dashboard-nav {
+        width: 100%;
+
+        justify-content: flex-end;
+
+        overflow-x: auto;
+    }
+
+
+    .trip-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .save-trip-button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .dashboard-main {
+        width: 92%;
+
+        padding-top: 35px;
+    }
+
+
+    .dashboard-welcome {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        margin-bottom: 40px;
+    }
+
+
+    .create-trip-button {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+
+    .trip-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .trip-form {
+        grid-template-columns: 1fr;
+    }
+
+
+    .create-trip-panel {
+        padding: 22px;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .dashboard-navbar {
+        align-items: flex-start;
+    }
+
+
+    .dashboard-nav {
+        justify-content: flex-start;
+
+        gap: 3px;
+    }
+
+
+    .dashboard-nav-link {
+        padding: 8px 9px;
+
+        font-size: 12px;
+    }
+
+
+    .dashboard-logout {
+        margin-left: 3px;
+
+        padding: 8px 11px;
+
+        font-size: 12px;
+    }
+
+
+    .dashboard-welcome h1 {
+        font-size: 38px;
+    }
+
+
+    .trip-card-body {
+        padding: 21px;
+    }
+
+}
+/* =========================================
+   DASHBOARD TRAVEL DECORATION
+========================================= */
+
+.dashboard-page {
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-travel-background {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* Winding travel routes */
+
+.dashboard-route {
+    position: absolute;
+
+    border: 4px solid #e5e6e9;
+
+    border-left: none;
+    border-bottom: none;
+
+    border-radius: 120px;
+
+    opacity: 0.75;
+}
+
+
+.dashboard-route-one {
+    width: 430px;
+    height: 240px;
+
+    top: 110px;
+    left: -170px;
+
+    transform: rotate(10deg);
+}
+
+
+.dashboard-route-two {
+    width: 500px;
+    height: 280px;
+
+    top: 470px;
+    right: -190px;
+
+    transform: rotate(-12deg);
+}
+
+
+.dashboard-route-three {
+    width: 420px;
+    height: 250px;
+
+    top: 900px;
+    left: -160px;
+
+    transform: rotate(-15deg);
+}
+
+
+/* Travel markers */
+
+.dashboard-travel-marker {
+    position: absolute;
+
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        0 8px 25px rgba(23, 32, 51, 0.08);
+
+    border: 5px solid;
+
+    font-size: 22px;
+}
+
+
+/* Car */
+
+.dashboard-marker-car {
+    top: 260px;
+    left: 7%;
+
+    border-color: #f4a62a;
+}
+
+
+/* Hotel */
+
+.dashboard-marker-hotel {
+    top: 185px;
+    right: 10%;
+
+    border-color: #57bd7d;
+}
+
+
+/* Plane */
+
+.dashboard-marker-plane {
+    top: 560px;
+    right: 8%;
+
+    border-color: #4f8fd9;
+}
+
+
+/* Location */
+
+.dashboard-marker-location {
+    top: 720px;
+    left: 8%;
+
+    border-color: #2dbbd3;
+}
+
+
+/* Keep actual dashboard content above decoration */
+
+.dashboard-navbar,
+.dashboard-main {
+    position: relative;
+    z-index: 2;
+}

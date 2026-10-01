@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/authStore";
 import useTripStore from "../../store/tripStore";
-import { useNavigate } from "react-router-dom";
-function Dashboard() {
+import "./Dashboard.css";
 
+function Dashboard() {
     const user = useAuthStore((state) => state.user);
+const logout = useAuthStore((state) => state.logout);
 
     const trips = useTripStore((state) => state.trips);
     const isLoading = useTripStore((state) => state.isLoading);
     const getTrips = useTripStore((state) => state.getTrips);
     const createTrip = useTripStore((state) => state.createTrip);
+
     const navigate = useNavigate();
+
     const [showForm, setShowForm] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -24,6 +28,7 @@ function Dashboard() {
         getTrips();
     }, [getTrips]);
 
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -31,12 +36,14 @@ function Dashboard() {
         });
     };
 
+
     const handleCreateTrip = async (e) => {
         e.preventDefault();
 
         const result = await createTrip(formData);
 
         if (result.success) {
+
             setFormData({
                 name: "",
                 destination: "",
@@ -47,161 +54,458 @@ function Dashboard() {
             setShowForm(false);
 
             alert("Trip created successfully!");
+
         } else {
+
             alert(result.error);
+
         }
     };
 
+
+    const formatDate = (date) => {
+        if (!date) return "";
+
+        return new Date(date).toLocaleDateString(
+            "en-US",
+            {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+    };
+
+
     return (
-        <div>
+         <div className="dashboard-page">
 
-            <h1>TripMate Dashboard</h1>
-            <button
-                onClick={() => {
-                    window.location.href = "/profile";
-                }}
-            >
-                My Profile
-            </button>
-            <button
-                onClick={() => {
-                    window.location.href = "/notifications";
-                }}
-            >
-                Notifications
-            </button>
-            {user && (
-                <div>
-                    <h2>Welcome, {user.name}</h2>
-                    <p>Email: {user.email}</p>
-                </div>
-            )}
+        {/* Travel route decoration */}
+        <div className="dashboard-travel-background">
 
-            <hr />
+            <div className="dashboard-route dashboard-route-one"></div>
+            <div className="dashboard-route dashboard-route-two"></div>
+            <div className="dashboard-route dashboard-route-three"></div>
 
-            <h2>My Trips</h2>
+            <div className="dashboard-travel-marker dashboard-marker-car">
+                🚗
+            </div>
 
-            <button
-                onClick={() => setShowForm(!showForm)}
-            >
-                {showForm ? "Cancel" : "Create New Trip"}
-            </button>
+            <div className="dashboard-travel-marker dashboard-marker-hotel">
+                🏨
+            </div>
 
-            {showForm && (
-                <div>
+            <div className="dashboard-travel-marker dashboard-marker-plane">
+                ✈
+            </div>
 
-                    <h3>Create Trip</h3>
+            <div className="dashboard-travel-marker dashboard-marker-location">
+                📍
+            </div>
 
-                    <form onSubmit={handleCreateTrip}>
+        </div>
 
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Trip Name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
+            {/* =========================
+                NAVBAR
+            ========================= */}
 
-                        <br /><br />
+            <header className="dashboard-navbar">
 
-                        <input
-                            type="text"
-                            name="destination"
-                            placeholder="Destination"
-                            value={formData.destination}
-                            onChange={handleChange}
-                            required
-                        />
+                <Link
+                    to="/dashboard"
+                    className="dashboard-brand"
+                >
+                    <span className="dashboard-brand-icon">
+                        ✈
+                    </span>
 
-                        <br /><br />
+                    <span>
+                        TripMate
+                    </span>
+                </Link>
 
-                        <label>Start Date</label>
-                        <br />
 
-                        <input
-                            type="date"
-                            name="startDate"
-                            value={formData.startDate}
-                            onChange={handleChange}
-                            required
-                        />
+                <nav className="dashboard-nav">
 
-                        <br /><br />
+                    <Link
+                        to="/dashboard"
+                        className="dashboard-nav-link active"
+                    >
+                        Dashboard
+                    </Link>
 
-                        <label>End Date</label>
-                        <br />
+                    <Link
+                        to="/notifications"
+                        className="dashboard-nav-link"
+                    >
+                        Notifications
+                    </Link>
 
-                        <input
-                            type="date"
-                            name="endDate"
-                            value={formData.endDate}
-                            onChange={handleChange}
-                            required
-                        />
+                    <Link
+                        to="/profile"
+                        className="dashboard-nav-link"
+                    >
+                        Profile
+                    </Link>
 
-                        <br /><br />
+                    <button
+    className="dashboard-logout"
+    onClick={async () => {
+        await logout();
+        navigate("/", { replace: true });
+    }}
+>
+    Logout
+</button>
 
-                        <button type="submit">
-                            Create Trip
-                        </button>
+                </nav>
 
-                    </form>
+            </header>
 
-                </div>
-            )}
 
-            <hr />
+            {/* =========================
+                MAIN
+            ========================= */}
 
-            {isLoading && (
-                <p>Loading trips...</p>
-            )}
+            <main className="dashboard-main">
 
-            {!isLoading && trips.length === 0 && (
-                <p>You don't have any trips yet.</p>
-            )}
+                <section className="dashboard-welcome">
 
-            {!isLoading && trips.length > 0 && (
-                <div>
+                    <div>
 
-                    {trips.map((item) => {
+                        <p className="dashboard-eyebrow">
+                            YOUR TRAVEL SPACE
+                        </p>
 
-                        const trip = item.trip;
+                        <h1>
+                            Welcome back
+                            {user?.name
+                                ? `, ${user.name.split(" ")[0]}`
+                                : ""}
+                            
+                        </h1>
 
-                        return (
-                            <div key={trip._id}>
+                        <p className="dashboard-subtitle">
+                            Ready to plan your next adventure?
+                        </p>
 
-                                <h3
-                                    onClick={() => navigate(`/trips/${trip._id}`)}
-                                    style={{ cursor: "pointer" }}
-                                >
-                                    {trip.name}
-                                </h3>
+                    </div>
 
-                                <p>
-                                    Destination: {trip.destination}
+
+                    <button
+                        className="create-trip-button"
+                        onClick={() =>
+                            setShowForm(!showForm)
+                        }
+                    >
+                        <span>
+                            {showForm ? "×" : "+"}
+                        </span>
+
+                        {showForm
+                            ? "Close"
+                            : "Create New Trip"}
+                    </button>
+
+                </section>
+
+
+                {/* =========================
+                    CREATE TRIP FORM
+                ========================= */}
+
+                {showForm && (
+
+                    <section className="create-trip-panel">
+
+                        <div className="create-trip-heading">
+
+                            <div>
+                                <p className="dashboard-eyebrow">
+                                    NEW ADVENTURE
                                 </p>
 
-                                <p>
-                                    Start Date: {trip.startDate}
-                                </p>
+                                <h2>
+                                    Create a trip
+                                </h2>
+                            </div>
 
-                                <p>
-                                    End Date: {trip.endDate}
-                                </p>
+                            <span className="create-trip-icon">
+                                🧭
+                            </span>
 
-                                <p>
-                                    Role: {item.role}
-                                </p>
+                        </div>
 
-                                <hr />
+
+                        <form
+                            className="trip-form"
+                            onSubmit={handleCreateTrip}
+                        >
+
+                            <div className="trip-form-field">
+
+                                <label htmlFor="trip-name">
+                                    Trip name
+                                </label>
+
+                                <input
+                                    id="trip-name"
+                                    type="text"
+                                    name="name"
+                                    placeholder="e.g. Goa Weekend"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
 
                             </div>
-                        );
-                    })}
 
-                </div>
-            )}
+
+                            <div className="trip-form-field">
+
+                                <label htmlFor="destination">
+                                    Destination
+                                </label>
+
+                                <input
+                                    id="destination"
+                                    type="text"
+                                    name="destination"
+                                    placeholder="e.g. Goa, India"
+                                    value={formData.destination}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+
+                            <div className="trip-form-field">
+
+                                <label htmlFor="start-date">
+                                    Start date
+                                </label>
+
+                                <input
+                                    id="start-date"
+                                    type="date"
+                                    name="startDate"
+                                    value={formData.startDate}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+
+                            <div className="trip-form-field">
+
+                                <label htmlFor="end-date">
+                                    End date
+                                </label>
+
+                                <input
+                                    id="end-date"
+                                    type="date"
+                                    name="endDate"
+                                    value={formData.endDate}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                className="save-trip-button"
+                            >
+                                Create Trip
+                                <span>→</span>
+                            </button>
+
+                        </form>
+
+                    </section>
+
+                )}
+
+
+                {/* =========================
+                    TRIPS
+                ========================= */}
+
+                <section className="trips-section">
+
+                    <div className="trips-heading">
+
+                        <div>
+                            <p className="dashboard-eyebrow">
+                                YOUR ADVENTURES
+                            </p>
+
+                            <h2>
+                                My Trips
+                            </h2>
+                        </div>
+
+                        {!isLoading && trips.length > 0 && (
+                            <span className="trip-count">
+                                {trips.length}{" "}
+                                {trips.length === 1
+                                    ? "trip"
+                                    : "trips"}
+                            </span>
+                        )}
+
+                    </div>
+
+
+                    {isLoading && (
+
+                        <div className="dashboard-state">
+                            <div className="loading-dot"></div>
+                            <p>Loading your trips...</p>
+                        </div>
+
+                    )}
+
+
+                    {!isLoading && trips.length === 0 && (
+
+                        <div className="empty-trips">
+
+                            <div className="empty-trip-icon">
+                                🧳
+                            </div>
+
+                            <h3>
+                                Your next adventure starts here.
+                            </h3>
+
+                            <p>
+                                Create your first trip and start
+                                planning something memorable.
+                            </p>
+
+                            <button
+                                className="empty-create-button"
+                                onClick={() =>
+                                    setShowForm(true)
+                                }
+                            >
+                                Create Your First Trip
+                                <span>→</span>
+                            </button>
+
+                        </div>
+
+                    )}
+
+
+                    {!isLoading && trips.length > 0 && (
+
+                        <div className="trip-grid">
+
+                            {trips.map((item) => {
+
+                                const trip = item.trip;
+
+                                return (
+
+                                    <article
+                                        className="trip-card"
+                                        key={trip._id}
+                                    >
+
+                                        <div className="trip-card-visual">
+
+                                            <span className="trip-destination-icon">
+                                                🗺️
+                                            </span>
+
+                                            <span className="trip-role">
+                                                {item.role}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div className="trip-card-body">
+
+                                            <p className="trip-card-label">
+                                                TRIP
+                                            </p>
+
+                                            <h3>
+                                                {trip.name}
+                                            </h3>
+
+                                            <div className="trip-location">
+                                                <span>📍</span>
+                                                {trip.destination}
+                                            </div>
+
+
+                                            <div className="trip-date-row">
+
+                                                <div>
+                                                    <span>
+                                                        START
+                                                    </span>
+
+                                                    <strong>
+                                                        {formatDate(
+                                                            trip.startDate
+                                                        )}
+                                                    </strong>
+                                                </div>
+
+                                                <span className="date-arrow">
+                                                    →
+                                                </span>
+
+                                                <div>
+                                                    <span>
+                                                        END
+                                                    </span>
+
+                                                    <strong>
+                                                        {formatDate(
+                                                            trip.endDate
+                                                        )}
+                                                    </strong>
+                                                </div>
+
+                                            </div>
+
+
+                                            <button
+                                                className="view-trip-button"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/trips/${trip._id}`
+                                                    )
+                                                }
+                                            >
+                                                View Trip
+                                                <span>→</span>
+                                            </button>
+
+                                        </div>
+
+                                    </article>
+
+                                );
+                            })}
+
+                        </div>
+
+                    )}
+
+                </section>
+
+            </main>
 
         </div>
     );
