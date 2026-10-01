@@ -3,6 +3,7 @@ const Itinerary = require("../models/Itinerary");
 const Booking = require("../models/Booking");
 const Expense = require("../models/Expense");
 const Settlement = require("../models/Settlement");
+
 // ==========================================
 // CHECK TRIP MEMBER
 // ==========================================
