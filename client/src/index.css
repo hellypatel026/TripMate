@@ -214,3 +214,112 @@ p {
 
     color: #7b8495;
 }
+/* =========================
+   COMMON TRAVEL BACKGROUND
+========================= */
+
+.travel-background {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.travel-route {
+    position: absolute;
+    border: 4px solid #e4e5e7;
+    border-left: none;
+    border-bottom: none;
+    border-radius: 120px;
+    opacity: 0.75;
+}
+
+.travel-route-one {
+    width: 430px;
+    height: 240px;
+    top: 120px;
+    left: -170px;
+    transform: rotate(10deg);
+}
+
+.travel-route-two {
+    width: 500px;
+    height: 280px;
+    top: 480px;
+    right: -190px;
+    transform: rotate(-12deg);
+}
+
+.travel-route-three {
+    width: 420px;
+    height: 250px;
+    top: 850px;
+    left: -160px;
+    transform: rotate(-15deg);
+}
+
+.travel-route-four {
+    width: 500px;
+    height: 280px;
+    top: 1200px;
+    right: -190px;
+    transform: rotate(15deg);
+}
+
+.travel-marker {
+    position: absolute;
+
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    box-shadow: 0 8px 25px rgba(23, 32, 51, 0.08);
+
+    border: 5px solid;
+
+    font-size: 22px;
+}
+
+.travel-marker-car {
+    top: 260px;
+    left: 7%;
+    border-color: #f4a62a;
+}
+
+.travel-marker-hotel {
+    top: 185px;
+    right: 10%;
+    border-color: #57bd7d;
+}
+
+.travel-marker-plane {
+    top: 560px;
+    right: 8%;
+    border-color: #4f8fd9;
+}
+
+.travel-marker-location {
+    top: 720px;
+    left: 8%;
+    border-color: #2dbbd3;
+}
+
+.travel-marker-food {
+    top: 980px;
+    right: 16%;
+    border-color: #ef6257;
+}
+
+.travel-marker-camera {
+    top: 1120px;
+    left: 10%;
+    border-color: #8d78df;
+}

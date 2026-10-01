@@ -3,8 +3,7 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    Link,
-    useParams
+    Link
 } from "react-router-dom";
 
 import useAuthStore from "./store/authStore";
@@ -13,19 +12,16 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import TripDetails from "./pages/trip/TripDetails";
-import TripChat from "./pages/chat/TripChat";
+import TripChatPage from "./pages/chat/tripChatPage";
 import Gallery from "./pages/gallery/Gallery";
 import Notifications from "./pages/notifications/Notifications";
 import Profile from "./pages/profile/Profile";
+import Expenses from "./pages/expenses/Expenses";
+import Itinerary from "./pages/itinerary/Itinerary";
+import Bookings from "./pages/bookings/Bookings";
 
 import "./App.css";
 
-
-function TripChatWrapper() {
-    const { tripId } = useParams();
-
-    return <TripChat tripId={tripId} />;
-}
 
 function LandingPage() {
     return (
@@ -86,12 +82,9 @@ function LandingPage() {
 
                 <nav className="landing-nav-links">
 
-                
                     <a href="#features">
                         What We Do
                     </a>
-
-                    
 
                     <Link
                         to="/login"
@@ -119,7 +112,7 @@ function LandingPage() {
                 <section className="about-hero">
 
                     <div className="hero-badge">
-                         Travel Together.Travel Better.
+                        Travel Together.Travel Better.
                     </div>
 
 
@@ -148,7 +141,7 @@ function LandingPage() {
                         </Link>
 
                         <a
-                            href="#about"
+                            href="#features"
                             className="secondary-button"
                         >
                             Discover TripMate
@@ -157,7 +150,6 @@ function LandingPage() {
                     </div>
 
                 </section>
-
 
 
                 {/* FEATURES */}
@@ -267,7 +259,7 @@ function LandingPage() {
 
                     <blockquote>
                         Jobs fill your pocket,
-                     but adventures fill your soul.
+                        but adventures fill your soul.
                     </blockquote>
 
                     <p>
@@ -277,13 +269,10 @@ function LandingPage() {
 
                 </section>
 
-
-                {/* FINAL CTA */}
-
-                
-
             </main>
 
+
+            {/* FOOTER */}
 
             <footer className="landing-footer">
 
@@ -309,6 +298,7 @@ function LandingPage() {
     );
 }
 
+
 function App() {
 
     const getMe = useAuthStore(
@@ -324,10 +314,15 @@ function App() {
 
             <Routes>
 
+                {/* Landing */}
+
                 <Route
                     path="/"
                     element={<LandingPage />}
                 />
+
+
+                {/* Authentication */}
 
                 <Route
                     path="/login"
@@ -339,30 +334,64 @@ function App() {
                     element={<Register />}
                 />
 
+
+                {/* Dashboard */}
+
                 <Route
                     path="/dashboard"
                     element={<Dashboard />}
                 />
+
+
+                {/* Trip Details */}
 
                 <Route
                     path="/trips/:tripId"
                     element={<TripDetails />}
                 />
 
+
+                {/* Trip Chat */}
+
                 <Route
                     path="/trips/:tripId/chat"
-                    element={<TripChatWrapper />}
+                    element={<TripChatPage />}
                 />
+
+
+                {/* Gallery */}
 
                 <Route
                     path="/trips/:tripId/gallery"
                     element={<Gallery />}
                 />
 
+
+                {/* Expenses */}
+
+                <Route
+                    path="/trips/:tripId/expenses"
+                    element={<Expenses />}
+                />
+                <Route
+                    path="/trips/:tripId/itinerary"
+                    element={<Itinerary />}
+                />
+                <Route
+                    path="/trips/:tripId/bookings"
+                    element={<Bookings />}
+                />
+
+
+                {/* Notifications */}
+
                 <Route
                     path="/notifications"
                     element={<Notifications />}
                 />
+
+
+                {/* Profile */}
 
                 <Route
                     path="/profile"

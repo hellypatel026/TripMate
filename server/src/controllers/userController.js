@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const User = require("../models/User");
 
 const createUser = async (req, res) => {
@@ -77,6 +78,13 @@ const updateUser = async (req, res) => {
     try {
         const { name, email, profilePicture } = req.body;
 
+        // Check if ID is valid
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({
+                message: "Invalid user ID"
+            });
+        }
+
         const user = await User.findById(req.params.id);
 
         if (!user) {
@@ -85,7 +93,7 @@ const updateUser = async (req, res) => {
             });
         }
 
-        // Update only fields that are provided
+        // Update provided fields
         if (name !== undefined) {
             user.name = name;
         }
@@ -98,22 +106,40 @@ const updateUser = async (req, res) => {
             user.profilePicture = profilePicture;
         }
 
-        await user.save();
-
-        const updatedUser = user.toObject();
-
-        delete updatedUser.password;
+        const updatedUser = await user.save();
 
         res.status(200).json({
             message: "User updated successfully",
-            user: updatedUser
+            user: {
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                profilePicture: updatedUser.profilePicture,
+                createdAt: updatedUser.createdAt,
+                updatedAt: updatedUser.updatedAt
+            }
         });
 
     } catch (error) {
         console.error("Update User Error:", error);
 
+        // Duplicate email
+        if (error.code === 11000) {
+            return res.status(400).json({
+                message: "Email address is already in use"
+            });
+        }
+
+        // Mongoose validation error
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+
         res.status(500).json({
-            message: "Failed to update user"
+            message: "Failed to update user",
+            error: error.message
         });
     }
 };
