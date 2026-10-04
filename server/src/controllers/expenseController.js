@@ -1,7 +1,7 @@
 const Expense = require("../models/Expense");
 const TripMember = require("../models/TripMember");
 const User = require("../models/User");
-
+const Settlement = require("../models/Settlement");
 // ==========================================
 // CALCULATE EXPENSE BALANCES
 // ==========================================
@@ -302,7 +302,7 @@ const createExpense = async (req, res) => {
 
             message: "Failed to create expense",
 
-            
+
 
         });
 
@@ -662,6 +662,32 @@ const getExpenseSummary = async (req, res) => {
 
         const balances = calculateBalances(expenses);
 
+
+        // ==========================================
+        // APPLY PAID SETTLEMENTS
+        // ==========================================
+
+        const paidSettlements = await Settlement.find({
+            trip: tripId,
+            status: "paid"
+        });
+
+        for (const settlement of paidSettlements) {
+
+            const fromUserId = settlement.from.toString();
+            const toUserId = settlement.to.toString();
+            const amount = Number(settlement.amount);
+
+            // Person who paid the settlement
+            // gets their owed balance reduced
+            balances[fromUserId] =
+                (balances[fromUserId] || 0) + amount;
+
+            // Person who received the settlement
+            // gets their receivable balance reduced
+            balances[toUserId] =
+                (balances[toUserId] || 0) - amount;
+        }
 
         // ==========================================
         // GET USER DETAILS
