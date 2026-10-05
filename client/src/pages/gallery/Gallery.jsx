@@ -91,7 +91,30 @@ function Gallery() {
             setUploading(false);
         }
     };
+    const handleDelete = async (mediaId) => {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this image?"
+        );
 
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            await api.delete(`/gallery/${mediaId}`);
+
+            alert("Image deleted successfully!");
+
+            await loadGallery();
+        } catch (error) {
+            console.error("Error deleting image:", error);
+
+            alert(
+                error.response?.data?.message ||
+                "Failed to delete image"
+            );
+        }
+    };
     const handleLogout = async () => {
         await logout();
         navigate("/", { replace: true });
@@ -361,9 +384,27 @@ function Gallery() {
                                         </span>
 
                                         <p>
-                                            {item.fileName ||
-                                                "Trip memory"}
+                                            {item.fileName || "Trip memory"}
                                         </p>
+
+                                        <div className="photo-actions">
+
+                                            <button
+                                                type="button"
+                                                onClick={() => window.open(item.mediaUrl, "_blank")}
+                                            >
+                                                View
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDelete(item._id)}
+                                                className="delete-photo-button"
+                                            >
+                                                Delete
+                                            </button>
+
+                                        </div>
 
                                     </div>
 

@@ -762,3 +762,50 @@
         gap: 7px;
     }
 }
+
+/* =========================
+   PHOTO ACTION BUTTONS
+   ========================= */
+
+.photo-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.photo-actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* View button */
+.photo-actions button:first-child {
+    background: rgba(255, 255, 255, 0.92);
+    color: #263238;
+}
+
+.photo-actions button:first-child:hover {
+    background: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Delete button */
+.photo-actions .delete-photo-button {
+    background: rgba(220, 70, 70, 0.9);
+    color: white;
+}
+
+.photo-actions .delete-photo-button:hover {
+    background: #c94b4b;
+    transform: translateY(-1px);
+}
+
+/* Click effect */
+.photo-actions button:active {
+    transform: scale(0.97);
+}
